@@ -8,8 +8,10 @@ const JobList = ({ jobs }) => {
   const [sortBy, setSortBy] = useState('date');
 
   const filteredJobs = jobs?.filter(job =>
-    job?.jobDetails[0]?.jobTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    job?.jobDetails[0]?.companyPosted.toLowerCase().includes(searchTerm.toLowerCase())
+    job?.jobDetails[0]?.jobTitle?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    job?.jobDetails[0]?.jobRoles[0]?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    job?.jobDetails[0]?.companyPosted?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    job?.jobDetails[0]?.collegePosted?.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
 
   const sortedJobs = [...filteredJobs].sort((a, b) => {
@@ -27,7 +29,7 @@ const JobList = ({ jobs }) => {
     <div className="min-h-screen bg-white container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-2">Saved Jobs</h1>
       <p className="text-gray-600 mb-6">
-        Browse your saved job listings and internships
+        Browse your saved opportunities
       </p>
 
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">

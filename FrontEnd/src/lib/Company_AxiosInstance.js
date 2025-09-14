@@ -153,12 +153,13 @@ export function SaveOppurtunity(jobId, jobType) {
     .then(response => response)
     .catch(error => error);
 }
+
 // get save opportunity
-// export function fetchSavedJobs(applicantType) {
-//   return axiosClient.get(`/application/saveopportunity`)
-//     .then(response => response)
-//     .catch(error => error);
-// }
+export function fetchSavedJobs() {
+  return axiosClient.get(`/application/saveopportunity`)
+    .then(response => response)
+    .catch(error => error);
+}
 
 // application
 export function ApplyForOncampusOppurtunity(jobId) {

@@ -28,6 +28,8 @@ function CompanySidebar({ activePath }) {
       {/* Company Sidebar */}
       <SidebarNavItem to="/home" icon={<FiHome />} label="Home" active={activePath === '/home'} />
       <SidebarNavItem to="/company-profile" icon={<FiUser />} label="Profile" active={activePath === '/company-profile'} />
+      
+      <SidebarNavItem to="/company/saved-jobs/" icon={<FiUser />} label="Saved Opportunities" active={activePath === '/company/saved-jobs/'} />
 
       <SidebarNavGroup label="Company Dashboard" icon={<FiPieChart />} active={activePath.includes('/employer-dashboard')}>
         <SidebarNavItem

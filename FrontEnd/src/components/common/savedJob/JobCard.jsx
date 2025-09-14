@@ -23,8 +23,8 @@ const JobCard = ({ job }) => {
             <span>{job?.jobDetails[0].workMode}</span>
           </div>
 
-          <h3 className="font-semibold text-lg">{job?.jobDetails[0]?.jobTitle}</h3>
-
+          <h3 className="font-semibold text-lg">{job?.jobDetails[0]?.jobTitle || job?.jobDetails[0]?.jobRoles}</h3>
+          <p className="mt-2 text-sm text-gray-600 line-clamp-3 capitalize">{job?.jobType}</p>
           <p className="mt-2 text-sm text-gray-600 line-clamp-3 capitalize">
             {job?.jobDetails[0]?.description}
           </p>

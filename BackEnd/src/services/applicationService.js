@@ -123,7 +123,8 @@ export async function fetchApplicationStatusService(userId, jobType) {
             {
                 $match: {
                     applicant: new mongoose.Types.ObjectId(userId),
-                    jobType: jobType
+                    jobType: jobType,
+                    currentStatus: {$ne: 'Saved'}
                 }
             },
             {
