@@ -67,7 +67,7 @@ import EditRoutes from "./pages/fresher/editAndReview/route"
 import OffCampus from "./pages/company/hiringChannels/offCampusHiring/OffCapus";
 import PoolCampus from "./pages/company/hiringChannels/poolCampusHiring/PoolCampus";
 import PostIntership from "./pages/company/hiringChannels/postInternship/CreateIntership";
-import JobRoutes from "./components/student/savedJob/JobRoutes";
+import JobRoutes from "./components/common/savedJob/JobRoutes";
 import ContactUs from "./pages/contact/ContactUs";
 import NotificationSettings from "./pages/profileDropdown/Notification";
 import FAQPage from "./pages/profileDropdown/FaqPage";
@@ -96,14 +96,14 @@ import AcceptedPoolDriveDetail from "./pages/company/acceptedCollegeOrCandidate/
 import EmployerAcceptedPoolShortlist from "./pages/employer/acceptedCollegeOrCandidate/poolCampus/AcceptedPoolShortlist";
 import EmployerAcceptedPoolDriveDetail from "./pages/employer/acceptedCollegeOrCandidate/poolCampus/AcceptedPoolDriveDetail";
 import AcceptedJobList from "./pages/company/acceptedCollegeOrCandidate/jobListings/AcceptedJobList";
-import EmployerAcceptedJobList from "./pages/employer/acceptedCollegeOrCandidate/jobListings/AcceptedJobList"; 
+import EmployerAcceptedJobList from "./pages/employer/acceptedCollegeOrCandidate/jobListings/AcceptedJobList";
 import JobManagement from "./pages/company/jobManagement/onCampusListing/OnCampusJobManagement";
 import AcceptedOffCampusList from "./pages/company/acceptedCollegeOrCandidate/offCampus/AcceptedOffCampusList";
 import EmployerAcceptedOffCampusList from "./pages/employer/acceptedCollegeOrCandidate/offCampus/AcceptedOffCampusList";
 import PoolCampusJobManagement from "./pages/company/jobManagement/poolCampusListing/PoolCampusJobManagement";
 import OffCampusJobManagement from "./pages/company/jobManagement/offCampusListing/OffCampusJobmanagement";
 
- import JobManagements from "./pages/college/manageApplication/CampusPlacement/JobManagement";
+import JobManagements from "./pages/college/manageApplication/CampusPlacement/JobManagement";
 import JobDetail from "./pages/college/manageApplication/CampusPlacement/JobDetail";
 import CollegeOncampusApplicationStatus from "./pages/college/applicationStatus/OncampusApplicationStatus";
 import CollegePoolcampusApplicationStatus from "./pages/college/applicationStatus/PoolcampusApplicationStatus";
@@ -216,23 +216,23 @@ import JobManagementApplicationForPool from "./pages/college/manageApplication/P
 import JobDetailForPool from "./pages/college/manageApplication/PoolCampusPlacement/JobDetailForPool";
 import InternshipListing from "./pages/company/jobManagement/internship/internahipListing";
 import IntershipListingPage from "./pages/company/shortlistedCollege/internship/InternshipListingPage";
-import AcceptedInternshipList from './pages/company/acceptedCollegeOrCandidate/internship/AcceptedInternshipList' ;
+import AcceptedInternshipList from './pages/company/acceptedCollegeOrCandidate/internship/AcceptedInternshipList';
 // Create query client
 const queryClient = new QueryClient();
 function AppRoutes() {
-   const [authUser] = useAuth() ;
-   
+  const [authUser] = useAuth();
+
   return (
     <Routes>
       {/* Auth Routes */}
-      <Route path="/mock" element={<PostIntership/>} />
+      <Route path="/mock" element={<PostIntership />} />
       <Route path="/" element={<RoleSelection />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/auth/linkedin/callback" element={<LinkedInCallback />} />
-      <Route path= "/invitations" element={<InvitationsPage/>} />
-      <Route path ="/invitation-accepted" element ={<ConfirmationPage/>} />
-      <Route path='/student-form' element={<Index/>} />
+      <Route path="/invitations" element={<InvitationsPage />} />
+      <Route path="/invitation-accepted" element={<ConfirmationPage />} />
+      <Route path='/student-form' element={<Index />} />
       <Route path="/welcome" element={<WelcomePage />} />
       <Route path="/step/1" element={<EditStepOne />} />
       <Route path="/step/2" element={<EditStepTwo />} />
@@ -248,16 +248,16 @@ function AppRoutes() {
       <Route path="/company-onboarding/step-3" element={<CompanyRegistration />} />
       <Route path="/company-onboarding/step-4" element={<HiringPreferences />} />
       <Route path="/company-onboarding/step-5" element={<CompanyVerification />} />
-       
+
 
       <Route path="/college-onboarding/*" element={<OnboardingFlow />} />
-      <Route path="/college-edit/*" element={<EditOnboardingFlow />} />  
+      <Route path="/college-edit/*" element={<EditOnboardingFlow />} />
 
-      <Route path="OnboardingflowForm" element={<OnboardingFlowForm/>} />
+      <Route path="OnboardingflowForm" element={<OnboardingFlowForm />} />
 
 
 
-      {/* Student */}  
+      {/* Student */}
       <Route
         path="/*"
         element={
@@ -272,31 +272,31 @@ function AppRoutes() {
               <Route path="/student-dashboard/internship-opportunities" element={<InternJobListings />} />
               <Route path="/student-dashboard/internship-opportunities/:jobId" element={<InternJobDetails />} />
               <Route path="/student-dashboard/off-campus-listings" element={<OffCampusJobListings />} />
-              <Route path="/student-dashboard/off-campus-listings/:jobId" element={<OffCampusJobDetail/>} />
-              <Route path="/student-dashboard/hackathon" element={<Hackathon/>} />
+              <Route path="/student-dashboard/off-campus-listings/:jobId" element={<OffCampusJobDetail />} />
+              <Route path="/student-dashboard/hackathon" element={<Hackathon />} />
               <Route path="/student-dashboard/hackathon/:id" element={<Detail />} />
-              <Route path="/student-dashboard/Referral-Jobs" element={<StudentReferralJobs/>} />
+              <Route path="/student-dashboard/Referral-Jobs" element={<StudentReferralJobs />} />
               <Route path="/student-dashboard/Referral-Jobs/:jobId" element={<StudentRefferalJobDetails />} />
               {/* service request  */}
-              <Route path ='service-request/career-craft' element={<CareerCraft/>}/>
-              <Route path ='service-request/mock-interview' element={<MockInterview/>}/>
-              <Route path ='service-request/counselling' element={<Counselling/>}/>
+              <Route path='service-request/career-craft' element={<CareerCraft />} />
+              <Route path='service-request/mock-interview' element={<MockInterview />} />
+              <Route path='service-request/counselling' element={<Counselling />} />
               {/* Application status  */}
-              <Route path="/application-status/job-listing" element={<JobTracker/>} />
-              <Route path="/application-status/off-campus-listing" element={<OffcampusStatus/>} />
-              <Route path="/application-status/internship-opportunities" element={<InternshipStatus/>} />
-              <Route path="/application-status/referral-jobs" element={<RefferralJobStatus/>} />
-              <Route path="/application-status/hackathon" element={<HackthonStatus/>} />
-              <Route path='/notifications' element={<NotificationSettings/>} />
-              <Route path='/Faq' element={<FAQPage/>} />
-              <Route path="/saved-jobs/*" element={<JobRoutes/>} />
-              <Route path="/ai-driven-job-search" element={<AIDrivenJob/>} />
+              <Route path="/application-status/job-listing" element={<JobTracker />} />
+              <Route path="/application-status/off-campus-listing" element={<OffcampusStatus />} />
+              <Route path="/application-status/internship-opportunities" element={<InternshipStatus />} />
+              <Route path="/application-status/referral-jobs" element={<RefferralJobStatus />} />
+              <Route path="/application-status/hackathon" element={<HackthonStatus />} />
+              <Route path='/notifications' element={<NotificationSettings />} />
+              <Route path='/Faq' element={<FAQPage />} />
+              <Route path="/saved-jobs/*" element={<JobRoutes />} />
+              <Route path="/ai-driven-job-search" element={<AIDrivenJob />} />
               <Route path="settings" element={<Settings />} />
-              <Route path="ContactUs" element={<ContactUs/>} />
+              <Route path="ContactUs" element={<ContactUs />} />
               <Route path="*" element={<NotFound />} />
 
-              
-                {/* Fresher */}
+
+              {/* Fresher */}
               <Route path="/fresherhome" element={<FresherDashboard />} />
               <Route path="/fresherprofile" element={<Fresher_Profile />} />
 
@@ -307,17 +307,17 @@ function AppRoutes() {
               <Route path="/fresher-dashboard/internship-opportunities/:jobId" element={<FInternJobDetails />} />
 
               <Route path="/fresher-dashboard/off-campus-listings" element={<FOffCampusJobListings />} />
-              <Route path="/fresher-dashboard/off-campus-listings/:jobId" element={<FOffCampusJobDetail/>} />
+              <Route path="/fresher-dashboard/off-campus-listings/:jobId" element={<FOffCampusJobDetail />} />
 
-              <Route path= "/fresher-dashboard/Referral-Jobs" element={<RefferalJobPosting/>} />
-              <Route path="/fresher-dashboard/Referral-Jobs/:jobId" element= {<RefferalJobDetail/>} />
-              
-              <Route path="/fresher-dashboard/hackathon" element={<FresherHackathon/>} />
+              <Route path="/fresher-dashboard/Referral-Jobs" element={<RefferalJobPosting />} />
+              <Route path="/fresher-dashboard/Referral-Jobs/:jobId" element={<RefferalJobDetail />} />
+
+              <Route path="/fresher-dashboard/hackathon" element={<FresherHackathon />} />
               <Route path="/fresher-dashboard/hackathon/:id" element={<FresherDetail />} />
               {/* service request  */}
-              <Route path ='/fresher-dashboard/service-request/career-craft' element={<FresherCareerCraft/>}/>
-              <Route path ='/fresher-dashboard/service-request/mock-interview' element={<FresherMockInterview/>}/>
-              <Route path ='/fresher-dashboard/service-request/counselling' element={<FresherCounselling/>}/>
+              <Route path='/fresher-dashboard/service-request/career-craft' element={<FresherCareerCraft />} />
+              <Route path='/fresher-dashboard/service-request/mock-interview' element={<FresherMockInterview />} />
+              <Route path='/fresher-dashboard/service-request/counselling' element={<FresherCounselling />} />
               {/* Application status  */}
               {/* <Route path="fresher/application-status/job-listing" element={<JobTracker/>} />
               <Route path="/application-status/off-campus-listing" element={<OffcampusStatus/>} />
@@ -328,179 +328,182 @@ function AppRoutes() {
 
 
               {/* proffesional routes */}
-              <Route path="/profhome" element={<ProfDashboard/>} />
+              <Route path="/profhome" element={<ProfDashboard />} />
               <Route path="/profprofile" element={<ProfProfile />} />
               <Route path="/professional-dashboard/job-listing" element={<ProfessionalJobListings />} />
               <Route path="/professional-dashboard/job-listing/:jobId" element={<ProfessionalJobDetails />} />
-              <Route path="/professional-dashboard/hackathon" element={<ProfessionalHackathon/>} />
+              <Route path="/professional-dashboard/hackathon" element={<ProfessionalHackathon />} />
               <Route path="/professional-dashboard/hackathon/:id" element={<ProfessionalDetail />} />
-               <Route path= "/professional-dashboard/referral-jobs" element={<RefferalPosting/>} />
-              <Route path="/professional-dashboard/referral-jobs/:jobId" element= {<RefferalDetail/>} />
+              <Route path="/professional-dashboard/referral-jobs" element={<RefferalPosting />} />
+              <Route path="/professional-dashboard/referral-jobs/:jobId" element={<RefferalDetail />} />
 
-              <Route path ='professional/service-request' element={<RefPostingPage/>}/>
-              <Route path ='professional/service-request/post' element={<PostReferralJobPage/>}/>
-              <Route path ='professional/service-request/referral' element={<ManageReferralJobs/>}/>
-              <Route path ='professional/service-request/totalapplicants' element={<TotalApplicantsPage/>}/>
-              <Route path ='professional/service-request/applicant' element={<OffCampusApplicant/>}/>
-              
-              
-              
+              <Route path='professional/service-request' element={<RefPostingPage />} />
+              <Route path='professional/service-request/post' element={<PostReferralJobPage />} />
+              <Route path='professional/service-request/referral' element={<ManageReferralJobs />} />
+              <Route path='professional/service-request/totalapplicants' element={<TotalApplicantsPage />} />
+              <Route path='professional/service-request/applicant' element={<OffCampusApplicant />} />
+
+
+
               {/* Company  */}
               <Route path="home" element={<Dashboard />} />
-              <Route path="/company-profile" element={<CompanyProfile />}/> 
+              <Route path="/company-profile" element={<CompanyProfile />} />
+
+              <Route path="/company/saved-jobs/*" element={<JobRoutes />} />
 
               <Route path="/employer-dashboard/resume-search" element={<ResumeApp />} />
               <Route path="/interviews" element={<InterviewScheduler />} />
 
               <Route path="/employer-dashboard/on-campus-request" element={<CollegeListingPage />} />
               <Route path="/employer-dashboard/on-campus-request/:id" element={<CollegeDetailsPage />} />
-              <Route path="/employer-dashboard/pool-campus-requests" element={<PoolEmployeeListing/>} />
+              <Route path="/employer-dashboard/pool-campus-requests" element={<PoolEmployeeListing />} />
               <Route path="/employer-dashboard/pool-campus-requests/:id" element={<PoolCampusEmployeeDash />} />
 
               {/* service request  */}
-              <Route path="/service-request/workforce-solution" element={<Workforce/>} />
-              <Route path="/service-request/employee-training" element={<EmployeeTraining/>} />
-              <Route path="/service-request/branding" element={<Branding/>} />
+              <Route path="/service-request/workforce-solution" element={<Workforce />} />
+              <Route path="/service-request/employee-training" element={<EmployeeTraining />} />
+              <Route path="/service-request/branding" element={<Branding />} />
 
               {/* application status */}
               <Route path="/company/application-status/oncampus" element={<OncampusApplicationStatus />} />
               <Route path="/company/application-status/poolcampus" element={<PoolcampusApplicationStatus />} />
-              
-                {/* Job Management   */}
-             <Route path="/job-management/on-campus-listings" element={<OnCampusJobManagement/>} />
-             <Route path="/job-management/pool-campus-listings" element={<PoolCampusJobManagement/>} />
-             <Route path="/job-management/off-campus-listings" element={<OffCampusJobManagement/>} />
-             <Route path="/job-management/job-listings" element={<JobListingJobManagement/>} />
-             <Route path ="job-management/internship-listings" element={<InternshipListing/>} />
 
-              
+              {/* Job Management   */}
+              <Route path="/job-management/on-campus-listings" element={<OnCampusJobManagement />} />
+              <Route path="/job-management/pool-campus-listings" element={<PoolCampusJobManagement />} />
+              <Route path="/job-management/off-campus-listings" element={<OffCampusJobManagement />} />
+              <Route path="/job-management/job-listings" element={<JobListingJobManagement />} />
+              <Route path="job-management/internship-listings" element={<InternshipListing />} />
+
+
               {/* Accepted college / candidates  */}
-              <Route path="/accepted/on-campus-listings" element={<AcceptedShortlistDrive/>} />
-              <Route path="/accepted/on-campus-listings/:driveId" element={<AcceptedDriveDetail/>} />
-              <Route path="/accepted/pool-campus-listings" element={<AcceptedPoolShortlist/>} />
-              <Route path="/accepted/pool-campus-listings/:driveId" element={<AcceptedPoolDriveDetail/>} />
-  
-              <Route path="/accepted/jobs-listings" element={<AcceptedJobList/>} />
-              <Route path="/accepted/off-campus-listings" element={<AcceptedOffCampusList/>} />
+              <Route path="/accepted/on-campus-listings" element={<AcceptedShortlistDrive />} />
+              <Route path="/accepted/on-campus-listings/:driveId" element={<AcceptedDriveDetail />} />
+              <Route path="/accepted/pool-campus-listings" element={<AcceptedPoolShortlist />} />
+              <Route path="/accepted/pool-campus-listings/:driveId" element={<AcceptedPoolDriveDetail />} />
 
-              <Route path= "/accepted/internship-listings" element={<AcceptedInternshipList/>} />
+              <Route path="/accepted/jobs-listings" element={<AcceptedJobList />} />
+              <Route path="/accepted/off-campus-listings" element={<AcceptedOffCampusList />} />
 
-              
+              <Route path="/accepted/internship-listings" element={<AcceptedInternshipList />} />
+
+
               {/* shortlisted candidate  */}
-                  
-              <Route path="/shortlisted/on-campus-listings" element={<ShortlistedDrivesPage/>} />
-              <Route path="/shortlisted/on-campus-listings/:driveId" element={<DriveDetailPage/>} />
-      
-              <Route path="/shortlisted/pool-campus-listings" element={<PoolCampusShortlistDrive/>} />
-              <Route path="/shortlisted/pool-campus-listings/:driveId" element={<PoolCampusDetailPage/>} />
-      
-              <Route path="/shortlisted/off-campus-listings" element={<OffCampusListingPage/>} />
 
-              <Route path="/shortlisted/jobs-listings" element={<JobListingPage/>} />
+              <Route path="/shortlisted/on-campus-listings" element={<ShortlistedDrivesPage />} />
+              <Route path="/shortlisted/on-campus-listings/:driveId" element={<DriveDetailPage />} />
 
-              <Route path="/shortlisted/internship-listings" element={<IntershipListingPage/>} />
+              <Route path="/shortlisted/pool-campus-listings" element={<PoolCampusShortlistDrive />} />
+              <Route path="/shortlisted/pool-campus-listings/:driveId" element={<PoolCampusDetailPage />} />
+
+              <Route path="/shortlisted/off-campus-listings" element={<OffCampusListingPage />} />
+
+              <Route path="/shortlisted/jobs-listings" element={<JobListingPage />} />
+
+              <Route path="/shortlisted/internship-listings" element={<IntershipListingPage />} />
 
               {/* Hiring Channel  */}
-              
-              <Route path='hiring-channels/post-a-job' element={<PostJob/>} />
-              <Route path='hiring-channels/post-an-internship' element={<PostIntership/>} />
-              <Route path='hiring-channels/on-campus-hiring' element={<OnCampusHiring/>} />
-              <Route path='hiring-channels/pool-campus-hiring' element={<PoolCampus/>} />
-              <Route path='hiring-channels/off-campus-hiring' element={<OffCampus/>} />
+
+              <Route path='hiring-channels/post-a-job' element={<PostJob />} />
+              <Route path='hiring-channels/post-an-internship' element={<PostIntership />} />
+              <Route path='hiring-channels/on-campus-hiring' element={<OnCampusHiring />} />
+              <Route path='hiring-channels/pool-campus-hiring' element={<PoolCampus />} />
+              <Route path='hiring-channels/off-campus-hiring' element={<OffCampus />} />
 
 
 
               {/* Employer Dashboard  */}
-              
+
               <Route path="home" element={<Dashboard />} />
-              <Route path="/employer-profile" element={<EmployerProfile />}/> 
+              <Route path="/employer-profile" element={<EmployerProfile />} />
 
               <Route path="/interviews" element={<EmployerInterviewScheduler />} />
               <Route path="/employer-dashboard/resume-search" element={<EmployerResumeApp />} />
               <Route path="/employer-dashboard/on-campus-request" element={<EmployerListingPage />} />
               <Route path="/employer-dashboard/on-campus-request/:id" element={<EmployerDetailsPage />} />
 
-              <Route path="/employer-dashboard/pool-campus-requests" element={<EmployerPoolEmployeeListing/>} />
+              <Route path="/employer-dashboard/pool-campus-requests" element={<EmployerPoolEmployeeListing />} />
               <Route path="/employer-dashboard/pool-campus-requests/:id" element={<EmployerPoolCampus />} />
 
               {/* service request  */}
-              <Route path="/service-request/workforce-solution" element={<EmployerWorkforce/>} />
-              <Route path="/service-request/employee-training" element={<EmployerTraining/>} />
-              <Route path="/service-request/branding" element={<EmployerBranding/>} />
-              
-                {/* Job Management   */}
-             <Route path="/job-management/on-campus-listings/employer" element={<EmployerOnCampusJobManagement/>} />
-             <Route path="/job-management/pool-campus-listings/employer" element={<EmployerPoolCampusJobManagement/>} />
-             <Route path="/job-management/off-campus-listings" element={<EmployerOffCampusJobManagement/>} />
-             <Route path="/job-management/job-listings" element={<EmployerJobListingJobManagement/>} />
+              <Route path="/service-request/workforce-solution" element={<EmployerWorkforce />} />
+              <Route path="/service-request/employee-training" element={<EmployerTraining />} />
+              <Route path="/service-request/branding" element={<EmployerBranding />} />
 
-              
-               {/* Accepted college / candidates  */}
-              <Route path="/Employeeaccepted/on-campus-listings" element={<EmployerAcceptedShortlistDrive/>} />
-              <Route path="/accepted/on-campus-listings/:driveId" element={<EmployerAcceptedDriveDetail/>} />
+              {/* Job Management   */}
+              <Route path="/job-management/on-campus-listings/employer" element={<EmployerOnCampusJobManagement />} />
+              <Route path="/job-management/pool-campus-listings/employer" element={<EmployerPoolCampusJobManagement />} />
+              <Route path="/job-management/off-campus-listings" element={<EmployerOffCampusJobManagement />} />
+              <Route path="/job-management/job-listings" element={<EmployerJobListingJobManagement />} />
 
-               <Route path="/accepted/pool-campus-listings" element={<EmployerAcceptedPoolShortlist/>} />
-              <Route path="/accepted/pool-campus-listings/:driveId" element={<EmployerAcceptedPoolDriveDetail/>} />
-    
-              <Route path="/Employee/acceptedJobList" element={<EmployerAcceptedJobList/>} />
-              <Route path="/accepted/off-campus-listings" element={<EmployerAcceptedOffCampusList/>} /> 
 
-              
+              {/* Accepted college / candidates  */}
+              <Route path="/Employeeaccepted/on-campus-listings" element={<EmployerAcceptedShortlistDrive />} />
+              <Route path="/accepted/on-campus-listings/:driveId" element={<EmployerAcceptedDriveDetail />} />
+
+              <Route path="/accepted/pool-campus-listings" element={<EmployerAcceptedPoolShortlist />} />
+              <Route path="/accepted/pool-campus-listings/:driveId" element={<EmployerAcceptedPoolDriveDetail />} />
+
+              <Route path="/Employee/acceptedJobList" element={<EmployerAcceptedJobList />} />
+              <Route path="/accepted/off-campus-listings" element={<EmployerAcceptedOffCampusList />} />
+
+
               {/* shortlisted candidate  */}
-                  
-              <Route path="/shortlisted/on-campus-listings" element={<EmployerShortlistedDrivesPage/>} />
-              <Route path="/shortlisted/on-campus-listings/:driveId" element={<EmployerDriveDetailPage/>} />
-      
-              <Route path="/shortlisted/pool-campus-listings" element={<EmployerPoolCampusShortlistDrive/>} />
-              <Route path="/shortlisted/pool-campus-listings/:driveId" element={<EmployerPoolCampusDetailPage/>} />
-      
-              <Route path="/shortlisted/off-campus-listings" element={<EmployerOffCampusListingPage/>} />
-              <Route path="/joblistingPage" element={<EmployerJobListingPage/>} />
+
+              <Route path="/shortlisted/on-campus-listings" element={<EmployerShortlistedDrivesPage />} />
+              <Route path="/shortlisted/on-campus-listings/:driveId" element={<EmployerDriveDetailPage />} />
+
+              <Route path="/shortlisted/pool-campus-listings" element={<EmployerPoolCampusShortlistDrive />} />
+              <Route path="/shortlisted/pool-campus-listings/:driveId" element={<EmployerPoolCampusDetailPage />} />
+
+              <Route path="/shortlisted/off-campus-listings" element={<EmployerOffCampusListingPage />} />
+              <Route path="/joblistingPage" element={<EmployerJobListingPage />} />
 
               {/* Hiring Channel  */}
-              
-              <Route path='/hiring-channels/post-a-job/employer' element={<EmployerPostJob/>} />
-              <Route path='/hiring-channels/post-an-internship/employer' element={<EmployerPostIntership/>} />
-              <Route path='/hiring-channels/on-campus-hiring/employer' element={<EmployerOnCampusHiring/>} />
-              <Route path='hiring-channels/pool-campus-hiring/employer' element={<EmployerPoolCampuses/>} />
-              <Route path='/hiring-channels/off-campus-hiring/employer' element={<EmployerOffCampus/>} />
 
-  
+              <Route path='/hiring-channels/post-a-job/employer' element={<EmployerPostJob />} />
+              <Route path='/hiring-channels/post-an-internship/employer' element={<EmployerPostIntership />} />
+              <Route path='/hiring-channels/on-campus-hiring/employer' element={<EmployerOnCampusHiring />} />
+              <Route path='hiring-channels/pool-campus-hiring/employer' element={<EmployerPoolCampuses />} />
+              <Route path='/hiring-channels/off-campus-hiring/employer' element={<EmployerOffCampus />} />
 
-              
-              
+
+
+
+
               {/* College  */}
               <Route path="home" element={<Dashboard />} />
               <Route path="college-profile" element={<CollegeProfile />} />
 
               {/* college Dashboard  */}
+              <Route path="/college/saved-jobs/*" element={<JobRoutes />} />
 
-              <Route path="/college-dashboard/on-campus-opportunities" element={<JobsListingPage/>} />
+              <Route path="/college-dashboard/on-campus-opportunities" element={<JobsListingPage />} />
               <Route path="/college-dashboard/on-campus-opportunities/:id" element={<JobDetailPage />} />
-        
-              <Route path="/college-dashboard/internship-opportunities" element={<InternJobsListingPage/>} />
+
+              <Route path="/college-dashboard/internship-opportunities" element={<InternJobsListingPage />} />
               <Route path="/college-dashboard/internship-opportunities/:id" element={<InternJobDetailPage />} />
-        
+
               <Route path="/college-dashboard/pool-campus-opportunities" element={<PoolJobListingPage />} />
               <Route path="/college-dashboard/pool-campus-opportunities/:id" element={<PoolJobDetailsPage />} />
 
               {/* service request  */}
-              <Route path= 'service-request/campus-placement' element={<CampusPlacement/>} />
-              <Route path= 'service-request/poolcampus-placement' element={<PoolCampusPlacement/>} />
-              <Route path= 'service-request/student-training-programs' element={<StudentTraining/>} />
-              <Route path= 'service-request/seminars' element={<Seminar/>} />
+              <Route path='service-request/campus-placement' element={<CampusPlacement />} />
+              <Route path='service-request/poolcampus-placement' element={<PoolCampusPlacement />} />
+              <Route path='service-request/student-training-programs' element={<StudentTraining />} />
+              <Route path='service-request/seminars' element={<Seminar />} />
 
               {/* job management  */}
 
-              <Route path="/manage-application/campus-placement" element={<JobProvider><JobManagementApplication/> </JobProvider> }/>
-              <Route path="/manage-application/campus-placement/:jobId" element={<JobProvider><JobDetail /> </JobProvider>}/>
+              <Route path="/manage-application/campus-placement" element={<JobProvider><JobManagementApplication /> </JobProvider>} />
+              <Route path="/manage-application/campus-placement/:jobId" element={<JobProvider><JobDetail /> </JobProvider>} />
 
-              <Route path="/manage-application/PoolCampus-placement" element={<JobProvider><JobManagementApplicationForPool/></JobProvider>} />
-              <Route path="/manage-application/PoolCampus-placement/:jobId" element={<JobProvider><JobDetailForPool /> </JobProvider>}/>
-              
+              <Route path="/manage-application/PoolCampus-placement" element={<JobProvider><JobManagementApplicationForPool /></JobProvider>} />
+              <Route path="/manage-application/PoolCampus-placement/:jobId" element={<JobProvider><JobDetailForPool /> </JobProvider>} />
 
-              <Route path="/application-status/oncampus" element={<CollegeOncampusApplicationStatus />}/>
-              <Route path="/application-status/poolcampus" element={<CollegePoolcampusApplicationStatus />}/>
+
+              <Route path="/application-status/oncampus" element={<CollegeOncampusApplicationStatus />} />
+              <Route path="/application-status/poolcampus" element={<CollegePoolcampusApplicationStatus />} />
 
               <Route path="/registered/on-campus-opportunities" element={
                 <ApplicationProvider>
@@ -512,7 +515,7 @@ function AppRoutes() {
                   <ApplicationDetailPage />
                 </ApplicationProvider>
               } />
-        
+
               <Route path="/registered/internship-opportunities" element={
                 <ApplicationProvider>
                   <InternApplicationsPage />
@@ -530,28 +533,28 @@ function AppRoutes() {
               } />
               <Route path="/registered/pool-campus-opportunities/:id" element={
                 <ApplicationProvider>
-                  <PoolApplicationDetailPage/>
+                  <PoolApplicationDetailPage />
                 </ApplicationProvider>
               } />
 
               {/* Professional  */}
-              <Route 
-          path="/chat-application" 
-          element={
-            authUser ? <ChatLayout /> : <Navigate to="/login" />
-          } 
-           />
-      
-             
+              <Route
+                path="/chat-application"
+                element={
+                  authUser ? <ChatLayout /> : <Navigate to="/login" />
+                }
+              />
+
+
             </Routes>
           </Layout>
         }
       />
 
 
-              
-              
-       {/* fresher  */}
+
+
+      {/* fresher  */}
       <Route path="/fresher/*">
         {formRoutes.map((route, index) => (
           <Route
@@ -571,7 +574,7 @@ function AppRoutes() {
             path={route.path}
             element={route.element}
           />
-       ))}
+        ))}
       </Route>
     </Routes>
   );
@@ -579,20 +582,20 @@ function AppRoutes() {
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-  <TooltipProvider>
-    <Toaster />
-    <Sonner />
-{/*   
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      {/*   
     <Router> */}
-    <AppProvider>  {/* Global app state */}
-          <FormProvider>  {/* Form-specific state */}
-            <AppRoutes />
-          </FormProvider>
-    </AppProvider>
-    {/* </Router> */}
-   
-  </TooltipProvider>
-</QueryClientProvider>
+      <AppProvider>  {/* Global app state */}
+        <FormProvider>  {/* Form-specific state */}
+          <AppRoutes />
+        </FormProvider>
+      </AppProvider>
+      {/* </Router> */}
+
+    </TooltipProvider>
+  </QueryClientProvider>
 );
 
 export default App;

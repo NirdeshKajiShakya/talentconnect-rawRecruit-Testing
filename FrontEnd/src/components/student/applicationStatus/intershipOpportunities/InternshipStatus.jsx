@@ -73,7 +73,7 @@ const InternshipStatus = () => {
       <div className="flex flex-1 overflow-hidden">
         {/* Job List Sidebar */}
         <div className="w-64 bg-white border-r border-gray-200 overflow-y-auto">
-          {filteredJobs?.map(job => (
+          {filteredJobs?.length > 0 ? filteredJobs?.map(job => (
             <div
               key={job._id}
               className={`p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 ${selectedJob.id === job.id ? 'bg-gray-100' : ''}`}
@@ -90,7 +90,9 @@ const InternshipStatus = () => {
                 <span>{job.jobDetails[0].workLocations}</span>
               </div>
             </div>
-          ))}
+          )) : (
+            <div className='text-red-500 p-4'>No Applications found!</div>
+          )}
         </div>
 
         {/* Job Details */}

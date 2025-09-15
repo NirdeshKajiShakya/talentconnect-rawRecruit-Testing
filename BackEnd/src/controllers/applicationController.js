@@ -62,11 +62,27 @@ export async function saveJobByUser(req, res) {
 export async function fetchSavedJobs(req, res) {
     // const { applicantType } = req.params;
     const userId = req.user._id;
+    const userType = req.user.userType;
 
     try {
-        const user = await getStudentService(userId);
+        let user;
+        switch (userType) {
+            case 'student':
+            case 'fresher':
+            case 'professional':
+                user = await getStudentService(userId)
+                break;
+            case 'college':
+                user = await getCollegeService(userId)
+                break;
+            case 'company':
+                user = await getCompanyService(userId)
+                break;
+            default:
+                break;
+        }
 
-        // if (!applicantType || !user) return res.status(404).json({ msg: "User or Job not found!" });
+        if (!userType || !user) return res.status(404).json({ msg: "User not found!" });
 
         const application = await getSavedJobsService(user?.data[0]._id);
         // if (application.success !== true) return res.status(403).json({ msg: application });
@@ -152,7 +168,7 @@ export async function createReferralApplication(req, res) {
     try {
         // to get userId from user database
         const user = await getStudentService(userId);
-        console.log(user, " ", referralId); 
+        console.log(user, " ", referralId);
         if (!user || !referralId) return res.status(404).json({ msg: "Invalid" });
 
         const application = await createApplicationService(user.data[0]._id, req.user.userType, referralId, "Refferral");

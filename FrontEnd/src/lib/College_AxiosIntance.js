@@ -33,6 +33,13 @@ export function SaveOppurtunity(jobId, jobType) {
     .catch(error => error);
 }
 
+// get save opportunity
+export function fetchSavedJobs() {
+  return axiosClient.get(`/application/saveopportunity`)
+    .then(response => response)
+    .catch(error => error);
+}
+
 // application
 export function ApplyForPoolCampus(jobId) {
   return axiosClient.post(`/application/poolcampus`, { jobId: jobId })

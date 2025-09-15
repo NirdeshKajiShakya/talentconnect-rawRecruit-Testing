@@ -12,7 +12,7 @@ const useJobs = () => {
     const loadJobs = async () => {
       try {
         const data = await fetchSavedJobs();
-        console.log("data: ", data.data);
+        // console.log("data: ", data.data);
         setJobs(data.data);
       } catch (err) {
         setError("Failed to load jobs. Please try again later.");
