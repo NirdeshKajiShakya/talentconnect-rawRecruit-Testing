@@ -136,6 +136,8 @@ export const getJobPostedByCompanyService = async (companyId, jobType) => {
     }
 }
 
+
+
 export const deleteJobByIdService = async (jobId,companyId) => {
     try {
         const response = await JobPostingTable.findOneAndDelete({ _id: jobId, companyPosted: companyId });

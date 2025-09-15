@@ -1,6 +1,7 @@
 import express from 'express';
 import { deleteJob, getPostedJobs } from '../controllers/jobManagementController.js';
 import secureRoute from '../middlewares/secureRouteMiddleware.js';
+import { getCollegePostedJobs } from '../controllers/collegeJobManagementController.js';
 
 const router = express.Router();
 
@@ -13,5 +14,8 @@ router.get('/:jobType', secureRoute, getPostedJobs);
 
 // get applications
 // router.get('offcampus/applications:id')
+
+
+
 
 export default router; 

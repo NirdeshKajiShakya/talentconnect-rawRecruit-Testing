@@ -77,3 +77,24 @@ export function getPoolCampusJobById(id) {
     .catch(error => error);
 }
 
+// job management 
+export function getCollegePostedJobs(jobType) {
+  return axiosClient.get(`/college/jobmanagement/${jobType}`)
+    .then(response => response)
+    .catch(error => error);
+}
+
+export function getApplicationByJobOfManagement(jobId, jobType) {
+  return axiosClient.get(`application/manage/college`, {
+      params: {
+        jobId: jobId,
+        jobType: jobType
+      }
+    })
+    .then(response => response)
+    .catch(error => {
+      console.log("Error: ", error);
+     
+      throw error; 
+    });
+}

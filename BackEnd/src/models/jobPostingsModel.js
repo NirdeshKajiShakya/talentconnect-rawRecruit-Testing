@@ -27,11 +27,11 @@ const jobPostingSchema = new mongoose.Schema({
     jobTitle: { type: String },
     jobCategory: { type: String},
     venue : { type: String }, 
-    jobStatus: {
-        type: String,   
-        enum: ["Open" , "Closed" , "Pending" ],
-        default: "Pending" 
-    },
+    // jobStatus: {
+    //     type: String,   
+    //     enum: ["Open" , "Closed" , "Pending" ],
+    //     default: "Pending" 
+    // },
     lookingFor: {
         type: String,
         enum: ["Job", "Internship", "Both"],
@@ -93,5 +93,33 @@ const jobPostingSchema = new mongoose.Schema({
     }],
 
 }, { timestamps: true });
+
+// Add a virtual property for jobStatus
+jobPostingSchema.virtual('jobStatus').get(function() {
+    const now = new Date();
+    const startDate = this.startDate ? new Date(this.startDate) : null;
+    const endDate = this.endDate ? new Date(this.endDate) : null;
+
+    if (!startDate || !endDate) {
+        return 'Pending'; // Default status if dates are missing
+    }
+    
+    // Set both dates to start of the day to compare only the date
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+    const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+    
+    if (today < start) {
+        return 'Pending';
+    } else if (today >= start && today <= end) {
+        return 'Open';
+    } else {
+        return 'Closed';
+    }
+});
+
+// Ensure virtuals are included when converting to JSON
+jobPostingSchema.set('toJSON', { virtuals: true });
+jobPostingSchema.set('toObject', { virtuals: true });
 
 export const JobPostingTable = mongoose.models.JobPostingTable || mongoose.model("JobPostingTable", jobPostingSchema);
