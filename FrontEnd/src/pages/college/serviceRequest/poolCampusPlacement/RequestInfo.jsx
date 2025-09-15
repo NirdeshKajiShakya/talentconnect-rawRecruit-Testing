@@ -784,17 +784,17 @@
 
 
 
-
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { ChevronDown, X } from 'lucide-react';
+import { Country, State, City } from 'country-state-city';
 
 export default function OffCampusHiringForm() {
     const initialFormState = {
         venue: '',
-        degree: [], // Changed to array for multi-select
-        collegeTypes: '', // Changed to single-select string
-        criteria: '', // Added new criteria field
+        degree: [],
+        collegeTypes: '',
+        criteria: '',
         workMode: [],
         employmentType: [],
         salaryRange: 'INR',
@@ -803,7 +803,9 @@ export default function OffCampusHiringForm() {
         tentativeEndDate: '',
         rounds: Array.from({ length: 6 }, (_, i) => ({ id: i + 1, students: '', branch: '', skills: '' })),
         country: '',
+        countryCode: '',
         state: '',
+        stateCode: '',
         city: '',
         pincode: '',
         contactPerson: {
@@ -822,22 +824,43 @@ export default function OffCampusHiringForm() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [alert, setAlert] = useState({ show: false, message: '', type: '' });
 
+    // --- State for dynamic dropdowns ---
+    const [countries, setCountries] = useState([]);
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
+
     const amenitiesRef = useRef(null);
-    const degreeRef = useRef(null); // Ref for new multi-select
+    const degreeRef = useRef(null);
     const [dropdownOpen, setDropdownOpen] = useState({ amenities: false, degree: false });
     const [customAmenity, setCustomAmenity] = useState('');
 
-    // --- Options ---
+    // --- Static Options ---
     const locations = ['Online', 'Bangalore', 'Mumbai', 'Delhi', 'Hyderabad', 'Chennai', 'Pune', 'Other'];
     const degreeOptions = ['B.Tech', 'M.Tech', 'MBA', 'B.Sc', 'M.Sc', 'PhD'];
     const collegeTypeOptions = ['Engineering', 'Medical', 'Management', 'Arts & Science', 'Law', 'Pharmacy', 'Architecture'];
     const workModeOptions = ['On-site', 'Remote', 'Hybrid'];
     const branchOptions = ['Computer Science', 'Mechanical', 'Civil', 'Electrical', 'Electronics', 'Bio-medical'];
     const designationOptions = ['HR Manager', 'Technical Recruiter', 'Talent Acquisition', 'Hiring Manager', 'Team Lead', 'Department Head', 'CEO', 'CTO', 'Founder', 'Other'];
-    const countryOptions = ['United States', 'India', 'Germany', 'Canada', 'Australia', 'Japan'];
     const minStudentsOptions = ['1-10', '11-25', '26-50', '51-100', '101-200', '200+'];
     const amenitiesOptions = ['Auditorium', 'Seminar Hall', 'Interview Rooms', 'Computer Labs', 'Wi-Fi Access', 'Projector'];
 
+    // --- Effects for location data ---
+    useEffect(() => {
+        setCountries(Country.getAllCountries());
+    }, []);
+
+    useEffect(() => {
+        const countryStates = formData.countryCode ? State.getStatesOfCountry(formData.countryCode) : [];
+        setStates(countryStates);
+        setCities([]); // Reset cities when country changes
+    }, [formData.countryCode]);
+
+    useEffect(() => {
+        const stateCities = (formData.countryCode && formData.stateCode) ? City.getCitiesOfState(formData.countryCode, formData.stateCode) : [];
+        setCities(stateCities);
+    }, [formData.countryCode, formData.stateCode]);
+
+    // --- Handlers ---
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (amenitiesRef.current && !amenitiesRef.current.contains(event.target)) {
@@ -856,7 +879,31 @@ export default function OffCampusHiringForm() {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-     const handleContactChange = (e) => {
+    const handleCountryChange = (e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const countryCode = selectedOption.getAttribute('data-countrycode') || '';
+        setFormData(prev => ({
+            ...prev,
+            country: e.target.value,
+            countryCode: countryCode,
+            state: '',
+            stateCode: '',
+            city: ''
+        }));
+    };
+
+    const handleStateChange = (e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const stateCode = selectedOption.getAttribute('data-statecode') || '';
+        setFormData(prev => ({
+            ...prev,
+            state: e.target.value,
+            stateCode: stateCode,
+            city: ''
+        }));
+    };
+
+    const handleContactChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
@@ -905,6 +952,8 @@ export default function OffCampusHiringForm() {
 
     const resetForm = () => {
         setFormData(initialFormState);
+        setStates([]);
+        setCities([]);
     };
 
     const handleSubmit = async (e) => {
@@ -961,7 +1010,7 @@ export default function OffCampusHiringForm() {
 
         try {
             const token = localStorage.getItem('token') || document.cookie.split('; ').find(row => row.startsWith('jwt='))?.split('=')[1];
-           
+            
             const response = await axios.post(`${import.meta.env.VITE_Backend_URL}/api/hiring-channels/pool-campus/college-request`, payload, {
                 withCredentials: true,
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
@@ -982,23 +1031,23 @@ export default function OffCampusHiringForm() {
         <div className="max-w-4xl mx-auto p-4 font-sans">
              {alert.show && (
                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
-                    <div className={`relative p-6 rounded-lg shadow-lg w-full max-w-md text-center ${alert.type === 'success' ? 'bg-green-100' : 'bg-red-100'}`}>
-                        <div className="flex flex-col items-center">
-                            {alert.type === 'success' && (
-                                <div className="w-12 h-12 rounded-full bg-green-200 p-2 flex items-center justify-center mx-auto mb-3">
-                                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                </div>
-                            )}
-                            <strong className={`text-xl font-bold mb-2 ${alert.type === 'success' ? 'text-green-800' : 'text-red-800'}`}>
-                                {alert.type === 'success' ? 'Success!' : 'Error!'}
-                            </strong>
-                            <span className={`text-sm ${alert.type === 'success' ? 'text-green-700' : 'text-red-700'}`}>{alert.message}</span>
-                            <button onClick={() => setAlert({ show: false, message: '', type: '' })} className="absolute top-2 right-2 p-1 rounded-full hover:bg-black/10 transition-colors">
-                                <X size={20} className={alert.type === 'success' ? 'text-green-800' : 'text-red-800'}/>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                   <div className={`relative p-6 rounded-lg shadow-lg w-full max-w-md text-center ${alert.type === 'success' ? 'bg-green-100' : 'bg-red-100'}`}>
+                       <div className="flex flex-col items-center">
+                           {alert.type === 'success' && (
+                               <div className="w-12 h-12 rounded-full bg-green-200 p-2 flex items-center justify-center mx-auto mb-3">
+                                   <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                               </div>
+                           )}
+                           <strong className={`text-xl font-bold mb-2 ${alert.type === 'success' ? 'text-green-800' : 'text-red-800'}`}>
+                               {alert.type === 'success' ? 'Success!' : 'Error!'}
+                           </strong>
+                           <span className={`text-sm ${alert.type === 'success' ? 'text-green-700' : 'text-red-700'}`}>{alert.message}</span>
+                           <button onClick={() => setAlert({ show: false, message: '', type: '' })} className="absolute top-2 right-2 p-1 rounded-full hover:bg-black/10 transition-colors">
+                               <X size={20} className={alert.type === 'success' ? 'text-green-800' : 'text-red-800'}/>
+                           </button>
+                       </div>
+                   </div>
+               </div>
             )}
             <div className="flex flex-col md:flex-row justify-between mb-8">
                 <div className="md:w-1/2">
@@ -1173,9 +1222,13 @@ export default function OffCampusHiringForm() {
                      <div>
                         <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">Country</label>
                         <div className="relative">
-                            <select id="country" name="country" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.country} onChange={handleChange}>
+                            <select id="country" name="country" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.country} onChange={handleCountryChange}>
                                 <option value="">Select Country</option>
-                                {countryOptions.map(option => (<option key={option} value={option}>{option}</option>))}
+                                {countries.map(country => (
+                                    <option key={country.isoCode} value={country.name} data-countrycode={country.isoCode}>
+                                        {country.name}
+                                    </option>
+                                ))}
                             </select>
                             <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
                         </div>
@@ -1183,19 +1236,41 @@ export default function OffCampusHiringForm() {
 
                     <div>
                          <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">State</label>
-                         <input id="state" name="state" type="text" placeholder="Enter state" className="w-full border p-2 rounded-md" value={formData.state} onChange={handleChange} />
+                         <div className="relative">
+                             <select id="state" name="state" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.state} onChange={handleStateChange} disabled={!formData.countryCode}>
+                                 <option value="">Select State</option>
+                                 {states.map(state => (
+                                     <option key={state.isoCode} value={state.name} data-statecode={state.isoCode}>
+                                         {state.name}
+                                     </option>
+                                 ))}
+                             </select>
+                             <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
+                         </div>
                     </div>
+
                      <div>
                          <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                         <input id="city" name="city" type="text" placeholder="Enter city" className="w-full border p-2 rounded-md" value={formData.city} onChange={handleChange} />
+                         <div className="relative">
+                             <select id="city" name="city" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.city} onChange={handleChange} disabled={!formData.stateCode}>
+                                 <option value="">Select City</option>
+                                 {cities.map(city => (
+                                     <option key={city.name} value={city.name}>
+                                         {city.name}
+                                     </option>
+                                 ))}
+                             </select>
+                             <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
+                         </div>
                     </div>
+
                      <div>
                          <label htmlFor="pincode" className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
                          <input id="pincode" name="pincode" type="text" placeholder="Enter pincode" className="w-full border p-2 rounded-md" value={formData.pincode} onChange={handleChange} />
-                    </div>
+                     </div>
                     
                     <div>
-                        <label className="block mb-1 font-medium">Contact Person</label>
+                        <label className="block mb-1 font-medium">Contact Person Name *</label>
                         <input type="text" name="name" value={formData.contactPerson.name} onChange={handleContactChange} placeholder="Enter full name" className="w-full p-2 border rounded" required />
                     </div>
                     <div>
@@ -1223,17 +1298,17 @@ export default function OffCampusHiringForm() {
                      <div>
                          <label htmlFor="minStudentsToBePlaced" className="block text-sm font-medium text-gray-700 mb-1">Minimum Students to be Placed *</label>
                          <div className="relative">
-                            <select id="minStudentsToBePlaced" name="minStudentsToBePlaced" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.minStudentsToBePlaced} onChange={handleChange} required >
-                                <option value="">Select Range</option>
-                                {minStudentsOptions.map(option => (<option key={option} value={option}>{option}</option>))}
-                            </select>
-                            <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
-                        </div>
+                             <select id="minStudentsToBePlaced" name="minStudentsToBePlaced" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.minStudentsToBePlaced} onChange={handleChange} required >
+                                 <option value="">Select Range</option>
+                                 {minStudentsOptions.map(option => (<option key={option} value={option}>{option}</option>))}
+                             </select>
+                             <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
+                         </div>
                     </div>
 
                     <div className="flex justify-end mt-6">
                       <button type="submit" disabled={isSubmitting} className="px-6 py-2 bg-black text-white font-medium rounded hover:bg-gray-800 transition-colors disabled:opacity-50">
-                        {isSubmitting ? 'Submitting...' : 'Register'}
+                          {isSubmitting ? 'Submitting...' : 'Register'}
                       </button>
                     </div>
                 </form>
@@ -1241,4 +1316,3 @@ export default function OffCampusHiringForm() {
         </div>
     );
 }
-

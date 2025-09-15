@@ -24,6 +24,8 @@ export const getPostedJobs = async (req, res) => {
     }
 }
 
+
+
 export const deleteJob = async (req, res) => {
     const { jobId } = req.params;
     const companyId = req.user._id;

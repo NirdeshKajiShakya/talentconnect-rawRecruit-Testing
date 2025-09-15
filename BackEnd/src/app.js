@@ -106,6 +106,7 @@ import notificationRoute from "./routes/notificationRoute.js"
 import jobPosting from './routes/jobPostingsRoute.js' ;
 import studentDashboardRoute from './routes/studentDashboard/studentDashboardRoute.js';
 import EmployerHiringChannelRoute from './routes/employerHiringChannel/hiringChannelRoute.js'
+import CollegeJobManagement from "./routes/collegeJobManageRoute.js" ;
 
 app.use("/api/auth", authRoutes);
 app.use("/api", student_onboardingroutes);
@@ -142,6 +143,7 @@ app.use("/company/dashboard", EmployerDashboard);
 app.use("/company/dashboard/resume", Resume);
 app.use("/company", Company);
 app.use('/company/jobmanagement',JobManagement);
+app.use('/college/jobmanagement',CollegeJobManagement) ;
 
 // RawRecruit API Mounts
 app.use("/api/rawrecruit", [

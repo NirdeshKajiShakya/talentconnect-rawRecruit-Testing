@@ -585,11 +585,10 @@
 // }
 
 
-
-
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, X } from 'lucide-react';
 import axios from 'axios';
+import { Country, State, City } from 'country-state-city';
 
 export default function RegisterPage({ onBackClick }) {
     const initialFormState = {
@@ -603,7 +602,9 @@ export default function RegisterPage({ onBackClick }) {
         rounds: Array.from({ length: 6 }, (_, i) => ({ id: i + 1, students: '', branch: '', skills: '' })),
         collegeLocation: '',
         country: '',
+        countryCode: '',
         state: '',
+        stateCode: '',
         city: '',
         pincode: '',
         coordinatorName: '',
@@ -622,6 +623,11 @@ export default function RegisterPage({ onBackClick }) {
     // --- Dropdown and Input State Management ---
     const [dropdownOpen, setDropdownOpen] = useState({ amenities: false });
     const [customAmenity, setCustomAmenity] = useState('');
+    
+    // Country-State-City data
+    const [countries, setCountries] = useState([]);
+    const [states, setStates] = useState([]);
+    const [cities, setCities] = useState([]);
 
     const amenitiesRef = useRef(null);
 
@@ -630,9 +636,45 @@ export default function RegisterPage({ onBackClick }) {
     const branchOptions = ['Computer Science', 'Mechanical', 'Civil', 'Electrical', 'Electronics', 'Bio-medical'];
     const designationOptions = ['Professor', 'HOD', 'Placement Officer', 'Dean', 'Coordinator'];
     const amenitiesOptions = ['Auditorium', 'Seminar Hall', 'Interview Rooms', 'Computer Labs', 'Wi-Fi Access', 'Projector'];
-    const countryOptions = ['United States', 'India', 'Germany', 'Canada', 'Australia', 'Japan'];
     const minStudentsOptions = ['1-10', '11-25', '26-50', '51-100', '101-200', '200+'];
 
+    // Load countries on component mount
+    useEffect(() => {
+        const allCountries = Country.getAllCountries();
+        setCountries(allCountries);
+    }, []);
+
+    // Load states when country changes
+    useEffect(() => {
+        if (formData.countryCode) {
+            const countryStates = State.getStatesOfCountry(formData.countryCode);
+            setStates(countryStates);
+            // Reset state and city when country changes
+            setFormData(prev => ({
+                ...prev,
+                state: '',
+                stateCode: '',
+                city: ''
+            }));
+        } else {
+            setStates([]);
+        }
+    }, [formData.countryCode]);
+
+    // Load cities when state changes
+    useEffect(() => {
+        if (formData.countryCode && formData.stateCode) {
+            const stateCities = City.getCitiesOfState(formData.countryCode, formData.stateCode);
+            setCities(stateCities);
+            // Reset city when state changes
+            setFormData(prev => ({
+                ...prev,
+                city: ''
+            }));
+        } else {
+            setCities([]);
+        }
+    }, [formData.countryCode, formData.stateCode]);
 
     // --- Handlers ---
     useEffect(() => {
@@ -655,6 +697,30 @@ export default function RegisterPage({ onBackClick }) {
             ? currentValues.filter(item => item !== value)
             : [...currentValues, value];
         setFormData({ ...formData, [field]: newValues });
+    };
+
+    const handleCountryChange = (e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const countryCode = selectedOption.getAttribute('data-countrycode');
+        setFormData(prev => ({
+            ...prev,
+            country: e.target.value,
+            countryCode: countryCode || '',
+            state: '',
+            stateCode: '',
+            city: ''
+        }));
+    };
+
+    const handleStateChange = (e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const stateCode = selectedOption.getAttribute('data-statecode');
+        setFormData(prev => ({
+            ...prev,
+            state: e.target.value,
+            stateCode: stateCode || '',
+            city: ''
+        }));
     };
 
     const handleRoundChange = (id, field, value) => {
@@ -685,6 +751,8 @@ export default function RegisterPage({ onBackClick }) {
 
     const resetForm = () => {
         setFormData(initialFormState);
+        setStates([]);
+        setCities([]);
     };
 
     const handleSubmit = async (e) => {
@@ -768,23 +836,23 @@ export default function RegisterPage({ onBackClick }) {
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg my-8 font-inter">
             {alert.show && (
                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
-                    <div className={`relative p-6 rounded-lg shadow-lg w-full max-w-md text-center ${alert.type === 'success' ? 'bg-green-100' : 'bg-red-100'}`}>
-                        <div className="flex flex-col items-center">
-                            {alert.type === 'success' && (
-                                <div className="w-12 h-12 rounded-full bg-green-200 p-2 flex items-center justify-center mx-auto mb-3">
-                                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                </div>
-                            )}
-                            <strong className={`text-xl font-bold mb-2 ${alert.type === 'success' ? 'text-green-800' : 'text-red-800'}`}>
-                                {alert.type === 'success' ? 'Success!' : 'Error!'}
-                            </strong>
-                            <span className={`text-sm ${alert.type === 'success' ? 'text-green-700' : 'text-red-700'}`}>{alert.message}</span>
-                            <button onClick={() => setAlert({ show: false, message: '', type: '' })} className="absolute top-2 right-2 p-1 rounded-full hover:bg-black/10 transition-colors">
-                                <X size={20} className={alert.type === 'success' ? 'text-green-800' : 'text-red-800'}/>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                   <div className={`relative p-6 rounded-lg shadow-lg w-full max-w-md text-center ${alert.type === 'success' ? 'bg-green-100' : 'bg-red-100'}`}>
+                       <div className="flex flex-col items-center">
+                           {alert.type === 'success' && (
+                               <div className="w-12 h-12 rounded-full bg-green-200 p-2 flex items-center justify-center mx-auto mb-3">
+                                   <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                               </div>
+                           )}
+                           <strong className={`text-xl font-bold mb-2 ${alert.type === 'success' ? 'text-green-800' : 'text-red-800'}`}>
+                               {alert.type === 'success' ? 'Success!' : 'Error!'}
+                           </strong>
+                           <span className={`text-sm ${alert.type === 'success' ? 'text-green-700' : 'text-red-700'}`}>{alert.message}</span>
+                           <button onClick={() => setAlert({ show: false, message: '', type: '' })} className="absolute top-2 right-2 p-1 rounded-full hover:bg-black/10 transition-colors">
+                               <X size={20} className={alert.type === 'success' ? 'text-green-800' : 'text-red-800'}/>
+                           </button>
+                       </div>
+                   </div>
+               </div>
             )}
 
             <div className="text-center mb-8">
@@ -821,7 +889,7 @@ export default function RegisterPage({ onBackClick }) {
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Looking for</label>
                     <div className="flex space-x-2">
-                        {['job', 'internship'].map((type) => (
+                        {['job', 'internship','both'].map((type) => (
                             <button key={type} type="button" className={`px-4 py-2 text-sm border rounded-md capitalize transition-colors ${formData.lookingFor.includes(type) ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'}`} onClick={() => handleMultiToggle('lookingFor', type)}>{type}</button>
                         ))}
                     </div>
@@ -919,7 +987,7 @@ export default function RegisterPage({ onBackClick }) {
                     <label htmlFor="collegeLocation" className="block text-sm font-medium text-gray-700 mb-1">College Location <span className="text-red-500">*</span></label>
                     <div className="relative">
                         <select id="collegeLocation" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.collegeLocation} onChange={(e) => handleChange('collegeLocation', e.target.value)} required >
-                            <option value="">Select Location</option>
+                            <option value="">Select Location Type</option>
                             <option value="Urban">Urban</option><option value="Suburban">Suburban</option><option value="Rural">Rural</option>
                         </select>
                         <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
@@ -929,33 +997,59 @@ export default function RegisterPage({ onBackClick }) {
                 <div>
                     <label htmlFor="country" className="block text-sm font-medium text-gray-700 mb-1">Country</label>
                     <div className="relative">
-                        <select id="country" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.country} onChange={(e) => handleChange('country', e.target.value)}>
+                        <select id="country" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.country} onChange={handleCountryChange}>
                             <option value="">Select Country</option>
-                            {countryOptions.map(option => (<option key={option} value={option}>{option}</option>))}
+                            {countries.map(country => (
+                                <option key={country.isoCode} value={country.name} data-countrycode={country.isoCode}>
+                                    {country.name}
+                                </option>
+                            ))}
                         </select>
                         <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
                     </div>
                 </div>
 
-                <div>
+                 <div>
                      <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">State</label>
-                     <input id="state" type="text" placeholder="Enter state" className="w-full border p-2 rounded-md" value={formData.state} onChange={(e) => handleChange('state', e.target.value)} />
-                </div>
+                     <div className="relative">
+                         <select id="state" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.state} onChange={handleStateChange} disabled={!formData.countryCode}>
+                             <option value="">Select State</option>
+                             {states.map(state => (
+                                 <option key={state.isoCode} value={state.name} data-statecode={state.isoCode}>
+                                     {state.name}
+                                 </option>
+                             ))}
+                         </select>
+                         <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
+                     </div>
+                 </div>
+
                  <div>
                      <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                     <input id="city" type="text" placeholder="Enter city" className="w-full border p-2 rounded-md" value={formData.city} onChange={(e) => handleChange('city', e.target.value)} />
-                </div>
+                     <div className="relative">
+                         <select id="city" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.city} onChange={(e) => handleChange('city', e.target.value)} disabled={!formData.stateCode}>
+                             <option value="">Select City</option>
+                             {cities.map(city => (
+                                 <option key={city.name} value={city.name}>
+                                     {city.name}
+                                 </option>
+                             ))}
+                         </select>
+                         <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
+                     </div>
+                 </div>
+
                  <div>
                      <label htmlFor="pincode" className="block text-sm font-medium text-gray-700 mb-1">Pincode</label>
                      <input id="pincode" type="text" placeholder="Enter pincode" className="w-full border p-2 rounded-md" value={formData.pincode} onChange={(e) => handleChange('pincode', e.target.value)} />
-                </div>
+                 </div>
                 
                 <div>
                     <label htmlFor="coordinatorName" className="block text-sm font-medium text-gray-700 mb-1">Coordinator Name</label>
                     <input id="coordinatorName" type="text" placeholder="Enter name" className="w-full border p-2 rounded-md" value={formData.coordinatorName} onChange={(e) => handleChange('coordinatorName', e.target.value)} />
                 </div>
                 <div>
-                    <label htmlFor="coordinatorDesignation" className="block text-sm font-medium text-gray-700 mb-1">Coordinator Designation *</label>
+                    <label htmlFor="coordinatorDesignation" className="block text-sm font-medium text-gray-700 mb-1">Coordinator Designation <span className="text-red-500">*</span></label>
                     <div className="relative">
                         <select id="coordinatorDesignation" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.coordinatorDesignation} onChange={(e) => handleChange('coordinatorDesignation', e.target.value)} required>
                             <option value="">Select Designation</option>
@@ -965,11 +1059,11 @@ export default function RegisterPage({ onBackClick }) {
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Official Email *</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Official Email <span className="text-red-500">*</span></label>
                     <input id="email" type="email" placeholder="hello@xyz.com" className="w-full border p-2 rounded-md" value={formData.email} onChange={(e) => handleChange('email', e.target.value)} required />
                 </div>
                 <div>
-                    <label htmlFor="mobile" className="block text-sm font-medium text-gray-700 mb-1">Official Mobile *</label>
+                    <label htmlFor="mobile" className="block text-sm font-medium text-gray-700 mb-1">Official Mobile <span className="text-red-500">*</span></label>
                     <input id="mobile" type="tel" placeholder="1234567890" className="w-full border p-2 rounded-md" value={formData.mobile} onChange={(e) => handleChange('mobile', e.target.value)} required/>
                 </div>
                 <div>
@@ -978,14 +1072,14 @@ export default function RegisterPage({ onBackClick }) {
                 </div>
 
                 <div>
-                     <label htmlFor="minStudentsToBePlaced" className="block text-sm font-medium text-gray-700 mb-1">Minimum Students to be Placed *</label>
+                     <label htmlFor="minStudentsToBePlaced" className="block text-sm font-medium text-gray-700 mb-1">Minimum Students to be Placed <span className="text-red-500">*</span></label>
                      <div className="relative">
-                        <select id="minStudentsToBePlaced" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.minStudentsToBePlaced} onChange={(e) => handleChange('minStudentsToBePlaced', e.target.value)} required >
-                            <option value="">Select Range</option>
-                            {minStudentsOptions.map(option => (<option key={option} value={option}>{option}</option>))}
-                        </select>
-                        <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
-                    </div>
+                         <select id="minStudentsToBePlaced" className="block w-full border border-gray-300 rounded-md px-3 py-2 appearance-none pr-10" value={formData.minStudentsToBePlaced} onChange={(e) => handleChange('minStudentsToBePlaced', e.target.value)} required >
+                             <option value="">Select Range</option>
+                             {minStudentsOptions.map(option => (<option key={option} value={option}>{option}</option>))}
+                         </select>
+                         <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><ChevronDown size={16} className="text-gray-400" /></div>
+                     </div>
                 </div>
 
                 <div className="flex justify-between pt-6">
@@ -996,4 +1090,3 @@ export default function RegisterPage({ onBackClick }) {
         </div>
     );
 }
-
