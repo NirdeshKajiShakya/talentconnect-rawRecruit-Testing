@@ -196,7 +196,7 @@ import EmployerPostJob from "./pages/employer/hiringChannels/postJob/CreateJob";
 import EmployerPostIntership from "./pages/employer/hiringChannels/postInternship/CreateIntership";
 import EmployerOnCampusHiring from './pages/employer/hiringChannels/onCampusHiring/OnCampusHiring'
 import EmployerPoolCampuses from './pages/employer/hiringChannels/poolCampusHiring/PoolCampus'
-import EmployerOffCampus from "./pages/employer/hiringChannels/offCampusHiring/OffCapus";
+import EmployerOffCampus from "./pages/employer/hiringChannels/offCampusHiring/OffCampus";
 import ChatLayout from "./home/chatLayout";
 import { useAuth } from "./context/AuthProvider";
 import { Navigate } from "react-router-dom";
