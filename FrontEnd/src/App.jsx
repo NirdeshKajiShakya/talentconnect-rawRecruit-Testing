@@ -173,7 +173,7 @@ import ProfessionalDetail from "./pages/professional/dashboard/hackathon/Detail"
 import EmployerAcceptedShortlistDrive from "./pages/employer/acceptedCollegeOrCandidate/onCampus/AcceptedShortlistDrive";
 import EmployerAcceptedDriveDetail from "./pages/employer/acceptedCollegeOrCandidate/onCampus/AcceptedDriveDetail";
 import OnboardingFlowForm from "./pages/employer/onboarding/Main";
-import EmployerResumeApp from "./components/Employer/employerDashboard/ResumeSearch/ResumeApp";
+import EmployerResumeApp from "./components/employer/employerDashboard/ResumeSearch/ResumeApp";
 import EmployerInterviewScheduler from "./components/employer/interview/InterviewSchedule";
 import EmployerListingPage from "./pages/employer/employerDashboard/CollegeListingPage";
 import EmployerDetailsPage from "./pages/employer/employerDashboard/CollegeDetailPage";
