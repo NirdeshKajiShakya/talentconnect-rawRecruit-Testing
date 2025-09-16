@@ -65,7 +65,6 @@ import { Confirmation } from "./components/onboarding/editFormStep/confirmEdit";
 import formRoutes from "./pages/fresher/onbordingForms/route"
 import EditRoutes from "./pages/fresher/editAndReview/route"
 import OffCampus from "./pages/company/hiringChannels/offCampusHiring/OffCampus";
-import EmployerOffCampus from "./pages/employer/hiringChannels/offCampusHiring/OffCampus";
 import PoolCampus from "./pages/company/hiringChannels/poolCampusHiring/PoolCampus";
 import PostIntership from "./pages/company/hiringChannels/postInternship/CreateIntership";
 import JobRoutes from "./components/student/savedJob/JobRoutes";
