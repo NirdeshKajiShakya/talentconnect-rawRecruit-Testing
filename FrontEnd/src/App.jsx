@@ -64,7 +64,7 @@ import { Confirmation } from "./components/onboarding/editFormStep/confirmEdit";
 // Fresher 
 import formRoutes from "./pages/fresher/onbordingForms/route"
 import EditRoutes from "./pages/fresher/editAndReview/route"
-import OffCampus from "./pages/company/hiringChannels/offCampusHiring/OffCampus";
+import OffCampus from "./pages/company/hiringChannels/offCampusHiring/OffCapus";
 import PoolCampus from "./pages/company/hiringChannels/poolCampusHiring/PoolCampus";
 import PostIntership from "./pages/company/hiringChannels/postInternship/CreateIntership";
 import JobRoutes from "./components/student/savedJob/JobRoutes";
@@ -195,7 +195,7 @@ import EmployerPostJob from "./pages/employer/hiringChannels/postJob/CreateJob";
 import EmployerPostIntership from "./pages/employer/hiringChannels/postInternship/CreateIntership";
 import EmployerOnCampusHiring from './pages/employer/hiringChannels/onCampusHiring/OnCampusHiring'
 import EmployerPoolCampuses from './pages/employer/hiringChannels/poolCampusHiring/PoolCampus'
-import EmployerOffCampus from "./pages/employer/hiringChannels/offCampusHiring/OffCampus";
+import EmployerOffCampus from "./pages/employer/hiringChannels/offCampusHiring/OffCapus";
 import ChatLayout from "./home/chatLayout";
 import { useAuth } from "./context/AuthProvider";
 import { Navigate } from "react-router-dom";
