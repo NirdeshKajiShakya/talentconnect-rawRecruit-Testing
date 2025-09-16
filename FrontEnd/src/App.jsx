@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -65,7 +64,8 @@ import { Confirmation } from "./components/onboarding/editFormStep/confirmEdit";
 // Fresher 
 import formRoutes from "./pages/fresher/onbordingForms/route"
 import EditRoutes from "./pages/fresher/editAndReview/route"
-import OffCampus from "./pages/company/hiringChannels/offCampusHiring/OffCapus";
+import OffCampus from "./pages/company/hiringChannels/offCampusHiring/OffCampus";
+import EmployerOffCampus from "./pages/employer/hiringChannels/offCampusHiring/OffCampus";
 import PoolCampus from "./pages/company/hiringChannels/poolCampusHiring/PoolCampus";
 import PostIntership from "./pages/company/hiringChannels/postInternship/CreateIntership";
 import JobRoutes from "./components/student/savedJob/JobRoutes";
@@ -180,8 +180,8 @@ import EmployerDetailsPage from "./pages/employer/employerDashboard/CollegeDetai
 import EmployerPoolEmployeeListing from "./pages/employer/employerDashboard/poolCampus/PoolEmployeeListing";
 import EmployerPoolCampus from "./pages/employer/employerDashboard/poolCampus/PoolCampusEmployerDash";
 import EmployerWorkforce from "./pages/employer/serviceRequest/workforceSolution/workforce";
-import EmployerTraining from "./pages/employer/serviceRequest/EmployeeTraining/EmployeeTraining";
-import EmployerBranding from "./pages/employer/serviceRequest/Branding/Branding";
+import EmployerTraining from "./pages/employer/serviceRequest/employeeTraining/EmployeeTraining";
+import EmployerBranding from "./pages/employer/serviceRequest/branding/Branding";
 import EmployerOnCampusJobManagement from "./pages/employer/jobManagement/onCampusListing/OnCampusJobManagement";
 import EmployerPoolCampusJobManagement from "./pages/employer/jobManagement/poolCampusListing/PoolCampusJobManagement";
 import EmployerOffCampusJobManagement from "./pages/employer/jobManagement/offCampusListing/OffCampusJobmanagement";
@@ -424,38 +424,38 @@ function AppRoutes() {
                 {/* Job Management   */}
              <Route path="/job-management/on-campus-listings/employer" element={<EmployerOnCampusJobManagement/>} />
              <Route path="/job-management/pool-campus-listings/employer" element={<EmployerPoolCampusJobManagement/>} />
-             <Route path="/job-management/off-campus-listings" element={<EmployerOffCampusJobManagement/>} />
-             <Route path="/job-management/job-listings" element={<EmployerJobListingJobManagement/>} />
+             <Route path="/job-management/off-campus-listings/employer" element={<EmployerOffCampusJobManagement/>} />
+             <Route path="/job-management/job-listings/employer" element={<EmployerJobListingJobManagement/>} />
 
               
                {/* Accepted college / candidates  */}
               <Route path="/Employeeaccepted/on-campus-listings" element={<EmployerAcceptedShortlistDrive/>} />
-              <Route path="/accepted/on-campus-listings/:driveId" element={<EmployerAcceptedDriveDetail/>} />
+              <Route path="/Employeeaccepted/on-campus-listings/:driveId" element={<EmployerAcceptedDriveDetail/>} />
 
                <Route path="/accepted/pool-campus-listings" element={<EmployerAcceptedPoolShortlist/>} />
               <Route path="/accepted/pool-campus-listings/:driveId" element={<EmployerAcceptedPoolDriveDetail/>} />
     
               <Route path="/Employee/acceptedJobList" element={<EmployerAcceptedJobList/>} />
-              <Route path="/accepted/off-campus-listings" element={<EmployerAcceptedOffCampusList/>} /> 
+              <Route path="/Employee/accepted/off-campus-listings" element={<EmployerAcceptedOffCampusList/>} /> 
 
               
               {/* shortlisted candidate  */}
                   
-              <Route path="/shortlisted/on-campus-listings" element={<EmployerShortlistedDrivesPage/>} />
-              <Route path="/shortlisted/on-campus-listings/:driveId" element={<EmployerDriveDetailPage/>} />
+              <Route path="/shortlisted/on-campus-listings/employer" element={<EmployerShortlistedDrivesPage/>} />
+              <Route path="/shortlisted/on-campus-listings/employer/:driveId" element={<EmployerDriveDetailPage/>} />
       
-              <Route path="/shortlisted/pool-campus-listings" element={<EmployerPoolCampusShortlistDrive/>} />
-              <Route path="/shortlisted/pool-campus-listings/:driveId" element={<EmployerPoolCampusDetailPage/>} />
+              <Route path="/shortlisted/pool-campus-listings/employer" element={<EmployerPoolCampusShortlistDrive/>} />
+              <Route path="/shortlisted/pool-campus-listings/employer/:driveId" element={<EmployerPoolCampusDetailPage/>} />
       
-              <Route path="/shortlisted/off-campus-listings" element={<EmployerOffCampusListingPage/>} />
-              <Route path="/joblistingPage" element={<EmployerJobListingPage/>} />
+              <Route path="/shortlisted/off-campus-listings/employer" element={<EmployerOffCampusListingPage/>} />
+              <Route path="/joblistingPage/employer" element={<EmployerJobListingPage/>} />
 
               {/* Hiring Channel  */}
               
               <Route path='/hiring-channels/post-a-job/employer' element={<EmployerPostJob/>} />
               <Route path='/hiring-channels/post-an-internship/employer' element={<EmployerPostIntership/>} />
               <Route path='/hiring-channels/on-campus-hiring/employer' element={<EmployerOnCampusHiring/>} />
-              <Route path='hiring-channels/pool-campus-hiring/employer' element={<EmployerPoolCampuses/>} />
+              <Route path='/hiring-channels/pool-campus-hiring/employer' element={<EmployerPoolCampuses/>} />
               <Route path='/hiring-channels/off-campus-hiring/employer' element={<EmployerOffCampus/>} />
 
   
