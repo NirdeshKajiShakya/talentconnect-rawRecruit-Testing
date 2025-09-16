@@ -132,7 +132,7 @@ import InternshipStatus from "./components/student/applicationStatus/intershipOp
 import RefferralJobStatus from "./components/student/applicationStatus/referralJobs/RefferralJobStatus";
 import HackthonStatus from "./components/student/applicationStatus/hackthon/HackthonStatus";
 import AIDrivenJob from "./components/student/aiDrivenJobSearch/AIDrivenJob";
-import Workforce from "./pages/company/serviceRequest/workforceSolution/Workforce";
+import Workforce from "./pages/company/serviceRequest/workforceSolution/workforce";
 import EmployeeTraining from "./pages/company/serviceRequest/employeeTraining/EmployeeTraining";
 import Branding from "./pages/company/serviceRequest/branding/Branding";
 import OnCampusJobManagement from "./pages/company/jobManagement/onCampusListing/OnCampusJobManagement";
