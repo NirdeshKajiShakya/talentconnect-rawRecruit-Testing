@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import './panelMemberModel.js'
-
+//testing purpose
 const HackathonSchema = new mongoose.Schema({
     title: {
         type: String,
