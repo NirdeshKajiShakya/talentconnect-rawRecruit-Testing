@@ -1,5 +1,5 @@
 import Hackathon from "../models/hackathonModel.js";
-
+//testing
 export const createHackathon = async (req, res, next) => {
     try {
         // Debug: Log the incoming request body
