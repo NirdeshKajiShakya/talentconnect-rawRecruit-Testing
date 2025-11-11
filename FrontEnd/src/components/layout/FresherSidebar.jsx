@@ -24,7 +24,7 @@ function FresherSidebar({ activePath }) {
   return (
     <div>
       {/* Fresher Sidebar */}
-      <SidebarNavItem to="/fresherhome" icon={<FiHome />} label="Home" active={activePath === '/fresherhome'} />
+      <SidebarNavItem to="/home" icon={<FiHome />} label="Home" active={activePath === '/home'} />
       <SidebarNavItem to="/fresherprofile" icon={<FiUser />} label="Profile" active={activePath === '/fresherprofile'} />
       <SidebarNavItem to="/saved-jobs" icon={<FiBookmark />} label="Saved Jobs/Internships" active={activePath === '/saved-jobs'} />
 

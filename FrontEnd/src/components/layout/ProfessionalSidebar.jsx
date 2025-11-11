@@ -23,7 +23,7 @@ function ProfessionalSidebar({ activePath }) {
   return (
     <div>
       {/* Professional Sidebar */}
-      <SidebarNavItem to="/profhome" icon={<FiHome />} label="Home" active={activePath === '/profhome'} />
+      <SidebarNavItem to="/home" icon={<FiHome />} label="Home" active={activePath === '/home'} />
       <SidebarNavItem to="/profprofile" icon={<FiUser />} label="Profile" active={activePath === '/profprofile'} />
       <SidebarNavItem to="/saved-jobs" icon={<FiBookmark />} label="Saved Jobs/Internships" active={activePath === '/saved-jobs'} />
 

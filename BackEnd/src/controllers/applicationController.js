@@ -569,7 +569,7 @@ export async function getShortlistedCandidatesByCompany(req, res) {
 
         
       
-        const response = await fetchCandidatesbyStatus(profileId, "Shortlisted", applicantType, jobType);
+    const response = await fetchCandidatesbyStatus(profileId, "Shortlisted", applicantType, jobType, "companyPosted");
         // console.log(response);
         res.status(200).json(response);
 
@@ -587,7 +587,7 @@ export async function getShortlistedCompaniesForCollege(req, res) {
     try {
         const college = await getCollegeService(collegeId);
         if (!college) return res.status(404).json({ msg: "college not found!" });
-        const response = await fetchCandidatesbyStatus(college.data[0]._id, "Shortlisted", applicantType, jobType);
+    const response = await fetchCandidatesbyStatus(college.data[0]._id, "Shortlisted", applicantType, jobType, "collegePosted");
         res.status(200).json(response);
     } catch (error) {
         console.log("Error:", error);
@@ -604,7 +604,7 @@ export async function getAcceptedCandidatesByCompany(req, res) {
     try {
         const company = await getEmployerService(companyId);
         if (!company) return res.status(404).json({ msg: "company not found!" });
-        const response = await fetchCandidatesbyStatus(company.data[0]._id, "Accepted", applicantType, jobType);
+    const response = await fetchCandidatesbyStatus(company.data[0]._id, "Accepted", applicantType, jobType, "companyPosted");
         // console.log(response);
         res.status(200).json(response);
     } catch (error) {

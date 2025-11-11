@@ -19,7 +19,7 @@ function Dashboard() {
         <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm">
           <h2 className="mb-4 text-lg font-medium text-gray-900">Main Content</h2>
           <p className="text-gray-600">
-            This is where your main content would go. You can click and paste content here as needed.
+            This is where your main content would go. You can click and paste content here as needed. 1234
           </p>
           <div className="flex justify-end mt-4">
             <Button

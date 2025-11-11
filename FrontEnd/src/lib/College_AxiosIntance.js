@@ -107,6 +107,13 @@ export function getApplicationByJobOfManagement(jobId, jobType, targetStatus) {
     });
 }
 
+// application status (as College applicant) per job type
+export function getMyApplicationStatus(jobType) {
+  return axiosClient.get(`/application/status/candidate/${encodeURIComponent(jobType)}`)
+    .then(response => response)
+    .catch(error => error);
+}
+
 // get all college names 
 export function fetchAllCollegesName() {
   return axiosClient.get(`/dropdown/collegeName`)
@@ -172,6 +179,13 @@ export function createStudentTrainingRequest(data) {
 }
 export function createCollegeSeminarRequest(data) {
   return axiosClient.post(`/api/servicerequests/college-seminar`, data)
+    .then(response => response)
+    .catch(error => error);
+}
+
+// get college service requests status
+export function getCollegeServiceRequestStatus() {
+  return axiosClient.get(`/api/servicerequests/college/status`)
     .then(response => response)
     .catch(error => error);
 }

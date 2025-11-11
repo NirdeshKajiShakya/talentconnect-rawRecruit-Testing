@@ -1,6 +1,7 @@
 
 node_modules
 .env
+.env.example
 sample_jobs.json
 readme.md
 image.png

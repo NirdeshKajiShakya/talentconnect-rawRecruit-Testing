@@ -27,6 +27,7 @@ import LoginPage from "./pages/auth/LoginPage";
 // Pages - Dashboard
 // import AdminDashboard from "./pages/admin/dashboard/adminDashboard";
 import Dashboard from "./pages/students/Dashboard";
+import UnifiedDashboard from "./pages/UnifiedDashboard";
 import Profile from "./pages/students/Profile";
 // import SavedJobs from "./pages/students/SavedJobs";
 // import StudentDashboard from "./pages/students/StudentDashboard";
@@ -290,8 +291,10 @@ function AppRoutes() {
           <Layout>
             <Routes>
 
+              {/* Universal Home Route - Renders based on user role */}
+              <Route path="/home" element={<UnifiedDashboard />} />
+              
               {/* student */}
-              <Route path="/home" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/student-dashboard/Job-listing" element={<JobListings />} />
               <Route path="/student-dashboard/Job-listing/:jobId" element={<JobDetails />} />
@@ -333,7 +336,6 @@ function AppRoutes() {
 
 
               {/* Fresher */}
-              <Route path="/fresherhome" element={<FresherDashboard />} />
               <Route path="/fresherprofile" element={<Fresher_Profile />} />
 
               <Route path="/fresher-dashboard/Job-listing" element={<FJobListings />} />
@@ -371,7 +373,6 @@ function AppRoutes() {
 
 
               {/* proffesional routes */}
-              <Route path="/profhome" element={<ProfDashboard />} />
               <Route path="/profprofile" element={<ProfProfile />} />
               <Route path="/professional-dashboard/Job-listing" element={<ProfessionalJobListings />} />
               <Route path="/professional-dashboard/Job-listing/:jobId" element={<ProfessionalJobDetails />} />
@@ -395,7 +396,6 @@ function AppRoutes() {
 
 
               {/* Company  */}
-              <Route path="home" element={<Dashboard />} />
               <Route path="/company-profile" element={<CompanyProfile />} />
 
               <Route path="/company/saved-jobs/*" element={<JobRoutes />} />
@@ -476,7 +476,6 @@ function AppRoutes() {
 
               {/* Employer Dashboard  */}
 
-              <Route path="home" element={<Dashboard />} />
               <Route path="/employer-profile" element={<EmployerProfile />} />
 
               <Route path="/interviews" element={<EmployerInterviewScheduler />} />
@@ -539,7 +538,6 @@ function AppRoutes() {
 
 
               {/* College  */}
-              <Route path="home" element={<Dashboard />} />
               <Route path="college-profile" element={<CollegeProfile />} />
 
               {/* college Dashboard  */}
